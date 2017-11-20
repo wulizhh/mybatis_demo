@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 在后续调用sql语句的时候，会用到它 "com.how2java.pojo" -->
+<!-- <mapper namespace="com.how2java.pojo"> <insert id="addCategory" parameterType="Category"> 
+	insert into category (name) values(#{name}) </insert> <delete id="deleteCategory" 
+	parameterType="Category" > delete from category where id= #{id} </delete> 
+	<select id="listCategory" resultType="Category"> select * from category </select> 
+	<select id="getCategory" parameterType="_int" resultType="Category"> select 
+	* from category where id= #{id} </select> <update id="updateCategory" parameterType="Category" 
+	> update category set name=#{name} where id=#{id} </update> <select id="listCategoryByName" 
+	parameterType="string" resultType="Category"> select * from category where 
+	name like '%'||#{0}||'%' </select> <select id="listCategoryMore" resultType="Category" 
+	> select * from category where id>#{id} and name like '%'||#{name}||'%' </select> 
+	</mapper> -->
+
+
+
+<mapper namespace="com.how2java.pojo">
+	<resultMap type="Category" id="categoryBean">
+		<id column="cid" property="id" />
+		<result column="cname" property="name" />
+
+		<!-- 一对多的关系 -->
+		<!-- property: 指的是集合属性的值, ofType：指的是集合中元素的类型 -->
+
+<collection property="list" ofType="product">
+
+<id column="pid" property="pid"/>
+<result column="pname" property="name"/>
+<result column="price" property="price"/>
+</collection>
+
+	</resultMap>
+
+
+	<select id="listCategory" resultMap="categoryBean">
+
+		SELECT c.*，p.*,c.name,p.name from category c , product p where c.id = p.cid
+
+
+	</select>
+
+</mapper>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

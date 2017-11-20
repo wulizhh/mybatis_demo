@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 使用association 进行多对一关系关联，指定表字段名称与对象属性名称的一一对应关系 -->
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.how2java.pojo">
+	<resultMap type="product" id="productBean">
+		<id column="pid" property="pid" />
+		<result column="pname" property="name" />
+		<result column="price" property="price" />
+	<!-- 多对一的关系 -->
+	<!-- property: 指的是属性名称, javaType：指的是属性的类型 -->
+<!-- <association property="category" javaType="Category">
+<id column="cid" property="id"/>
+<result column="cname" property="name"/>
+
+
+</association> -->
+
+	</resultMap>
+<!-- 根据id查询Product, 关联将Orders查询出来 -->
+<select id="listProduct" resultMap="productBean">
+
+	SELECT c.*，p.*,c.cname,p.pname from category c , product p where c.cid = p.cid
+
+
+</select>
+<update id="updateproduct"> 
+update product set cid=2 where  pid = 5
+</update>
+
+<select id="productbyid"  resultMap="productBean">
+select * from product where pid=#{id}<!-- 0 -->
+
+</select>
+
+
+
+<select id="productlist"  resultMap="productBean">
+select * from product
+<if test="name!=null">
+ where pname like '%'||#{name}||'%'<!-- 0 -->
+
+</if>
+
+<!-- 单条件查询，多条件查询就会出问题 ，多个and-->
+</select>
+
+<select id="productlist2"  resultMap="productBean">
+select * from product
+<where>
+<if test="name!=null">
+and pname like '%'||#{name}||'%'<!-- 0 -->
+
+</if>
+<if test="prices!=null and prices !=0">
+ and price>#{prices}
+</if>
+</where>
+<!-- 单条件查询，多条件查询就会出问题 ，多个and-->
+</select>
+
+<update id="updateproduct" parameterType="product">
+update product 
+<set>
+<if test="name!=null">
+set pname =#{name}
+</if>
+<if test="prices!=null and price !=0">
+
+set price =#{prices}
+</if>
+</set>
+</update>
+
+
+</mapper>

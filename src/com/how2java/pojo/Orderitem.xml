@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.how2java.pojo">
+<insert id="addOrderitem" parameterType="Orderitem">
+insert into orderitem values( ot_id.nextval,#{order.id},#{product.pid},#{number})
+<!-- ot_id.nextval -->
+</insert>
+<delete id="deleteOrderitem" parameterType="Orderitem">
+  delete from orderitem where ot_oid = #{order.id} and ot_pid = #{product.pid}
+
+</delete>
+<delete id="deleteOrderitembyoid" parameterType="Orderitem">
+  delete from orderitem where ot_oid = #{order.id}
+
+</delete>
+</mapper>
