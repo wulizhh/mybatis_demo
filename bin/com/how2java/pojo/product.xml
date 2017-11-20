@@ -69,7 +69,6 @@ update product
 set pname =#{name}
 </if>
 <if test="prices!=null and price !=0">
-
 set price =#{prices}
 </if>
 </set>
